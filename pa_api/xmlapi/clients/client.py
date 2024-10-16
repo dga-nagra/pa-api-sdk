@@ -20,6 +20,7 @@ class Client(BaseXMLApiClient):
 
     def _post_init(self):
         self.configuration = Config(self)
+        self.operation = Operation(self)
         self.commit = Commit(self)
         self.logs = Log(self)
         self.misc = Misc(self)

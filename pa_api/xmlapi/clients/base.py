@@ -97,10 +97,10 @@ class BaseXMLApiClient:
         host = host or env_host
         if not host:
             raise Exception("Missing Host")
-        host, _, _ = clean_url_host(host)
+        base_url, _, _ = clean_url_host(host)
         params = {"user": username, "password": password}
         return raw_request(
-            host,
+            f"{base_url}/api",
             type="keygen",
             method="POST",
             params=params,

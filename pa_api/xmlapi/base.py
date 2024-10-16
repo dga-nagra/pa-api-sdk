@@ -125,6 +125,10 @@ def raw_request(
     if not parse:
         return res
     content = res.content.decode()
+    # try:
+    #     tree = etree_fromstring(content, remove_blank_text=remove_blank_text)
+    # except lxml.etree.XMLSyntaxError:
+    #     print(content[:500])
     tree = etree_fromstring(content, remove_blank_text=remove_blank_text)
     status = tree.attrib["status"]
     code = int(tree.get("code", SUCCESS_CODE))
