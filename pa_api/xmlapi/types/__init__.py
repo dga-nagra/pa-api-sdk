@@ -18,6 +18,7 @@ from .config import (
     Vlan,
     Zone,
 )
+from .logs import Log, LogJob
 from .operations import (
     Device,
     HAInfo,

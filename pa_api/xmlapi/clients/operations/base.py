@@ -14,20 +14,18 @@ class OperationProxy:
 
     def _request(
         self,
+        cmd,
         method="GET",
         vsys=None,
         params=None,
         remove_blank_text=True,
-        parse=True,
-        stream=None,
         timeout=None,
     ):
         return self._client._request(  # noqa: SLF001
+            cmd,
             method=method,
             vsys=vsys,
             params=params,
             remove_blank_text=remove_blank_text,
-            parse=parse,
-            stream=stream,
             timeout=timeout,
         )
