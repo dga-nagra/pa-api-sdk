@@ -1,4 +1,4 @@
-from .address import Address
+from .address import Address, AddressGroup
 from .devicegroup import DeviceGroup
 from .interface import (
     AggregateEthernet,
@@ -10,6 +10,7 @@ from .interface import (
     Loopback,
     Vlan,
 )
+from .profiles import CustomUrlCategory
 from .routing import RoutingTable
 from .rules import NAT, RuleBase, Security
 from .zone import Zone

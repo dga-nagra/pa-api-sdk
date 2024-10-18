@@ -4,7 +4,9 @@ from pa_api.utils import (
 
 from .config import (
     Address,
+    AddressGroup,
     AggregateEthernet,
+    CustomUrlCategory,
     DeviceGroup,
     Ethernet,
     GenericInterface,

@@ -73,6 +73,11 @@ class Address(XMLBaseModel):
         return self
 
 
+class AddressGroup(XMLBaseModel):
+    name: str = Field(validation_alias="@name")
+    static_members: List[String] = Field(alias="static")
+
+
 def find_addresses(tree):
     # addresses_xml = tree.xpath(".//address/entry")
     addresses_xml = tree.xpath("./devices/entry/device-group//address/entry")
