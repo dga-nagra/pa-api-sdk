@@ -4,7 +4,8 @@ from pydantic import AliasPath, ConfigDict, Field
 
 from pa_api.xmlapi.types.utils import List, String, XMLBaseModel
 
-from .address import Address
+from .address import Address, AddressGroup
+from .profiles import Profile
 from .rules import RuleBase
 
 
@@ -21,11 +22,12 @@ class DeviceGroup(XMLBaseModel):
     devices: List[String] = Field(
         validation_alias=AliasPath("devices", "entry", "@name"), default_factory=list
     )
-    # devices: List[Device] = Field(
-    #     validation_alias=AliasPath("devices", "entry"), default_factory=list
-    # )
+    profiles: Optional[Profile] = None
     addresses: List[Address] = Field(
         validation_alias=AliasPath("address", "entry"), default_factory=list
+    )
+    address_groups: List[AddressGroup] = Field(
+        validation_alias=AliasPath("address-group", "entry"), default_factory=list
     )
     post_rulebase: Optional[RuleBase] = Field(
         validation_alias="post-rulebase", default=None

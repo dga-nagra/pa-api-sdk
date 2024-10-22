@@ -5,7 +5,10 @@ from datetime import datetime
 from types import new_class
 from typing import Annotated, Any, Optional, TypeVar
 
-from pydantic import BaseModel, TypeAdapter
+from pydantic import (
+    BaseModel,
+    TypeAdapter,
+)
 from pydantic.functional_validators import (
     BeforeValidator,
     PlainValidator,
@@ -20,12 +23,47 @@ DATETIME_FORMAT = f"%Y/%m/%d {TIME_FORMAT}"
 DATETIME_MS_FORMAT = f"{DATETIME_FORMAT}.%f"
 NoneType: type = type(None)
 
+# if TYPE_CHECKING:
+#     from pa_api.xmlapi.clients import Client
+
 
 class XMLBaseModel(BaseModel):
+    # raw_xml: Optional[Any] = None
+
+    # @model_validator(mode="before")
+    # @classmethod
+    # def _get_raw_xml(cls, data, info: ValidationInfo):
+    #     if isinstance(info.context, dict):
+    #         raw_xml = info.context.get("raw_xml")
+    #         if raw_xml is not None:
+    #             data["raw_xml"] = raw_xml
+    #     return data
+
+    # @classmethod
+    # def from_xml(cls, xml) -> Self:
+    #     data = first(el2dict(xml).values())
+    #     return cls.model_validate(data, context={"raw_xml": xml})
+
+    # _client: Optional["Client"]
+    # def bind_client(self, client: Optional["Client"]):
+    #     self._client = client
+    #     return self
+
+    # @model_validator(mode="after")
+    # def _auto_bind_client(self, info: ValidationInfo):
+    #     client = None
+    #     if isinstance(info.context, dict):
+    #         client = info.context.get("client")
+    #     self.bind_client(client)
+    #     return self
+
     @classmethod
     def from_xml(cls, xml) -> Self:
         data = first(el2dict(xml).values())
-        return cls.model_validate(data)
+        # context = {}
+        # if client is not None:
+        #     context["client"] = client
+        return cls.model_validate(data)  # , context=context
 
 
 def parse_datetime(d):
@@ -110,6 +148,7 @@ def ensure_str(v: Any) -> str:
     if v is None:
         return ""
     if isinstance(v, dict):
+        print(v)
         return v["#text"]
     return v
 
