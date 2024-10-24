@@ -1,4 +1,5 @@
 from .address import Address, AddressGroup
+from .config import Configuration
 from .devicegroup import DeviceGroup
 from .interface import (
     AggregateEthernet,

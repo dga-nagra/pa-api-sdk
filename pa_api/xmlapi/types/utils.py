@@ -148,7 +148,6 @@ def ensure_str(v: Any) -> str:
     if v is None:
         return ""
     if isinstance(v, dict):
-        print(v)
         return v["#text"]
     return v
 

@@ -4,15 +4,16 @@ from pa_api.xmlapi.types.utils import List, String, XMLBaseModel
 
 from .devicegroup import DeviceGroup
 
-
-class DeviceConfig(XMLBaseModel):
-    name: String = Field(alias="@name")
+# class DeviceConfig(XMLBaseModel):
+#     ...
 
 
 class DeviceEntry(XMLBaseModel):
     name: String = Field(alias="@name")
-    config: DeviceConfig = Field(alias="deviceconfig")
-    device_groups: List[DeviceGroup] = Field(alias="device-group")
+    # config: DeviceConfig = Field(validation_alias=AliasPath("deviceconfig", "entry"))
+    device_groups: List[DeviceGroup] = Field(
+        validation_alias=AliasPath("device-group", "entry")
+    )
 
 
 class Configuration(XMLBaseModel):

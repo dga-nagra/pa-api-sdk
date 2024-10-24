@@ -134,7 +134,7 @@ def raw_request(
     code = int(tree.get("code", SUCCESS_CODE))
     if status == "error" or code < SUCCESS_CODE:
         logger.debug(content[:500])
-        print(content[:500])
+        # print(content[:500])
         msg = parse_msg_result(tree)
         if msg:
             raise ServerError(msg)
@@ -142,4 +142,13 @@ def raw_request(
         if msg is None:
             msg = f"Unknown error with code {code} occured"
         raise Exception(msg)
+
+    # if tree.tag == "response":
+    #     children = tree.getchildren()
+    #     if len(children) == 1:
+    #         tree = children[0]
+    # if tree.tag == "result":
+    #     children = tree.getchildren()
+    #     if len(children) == 1:
+    #         tree = children[0]
     return tree

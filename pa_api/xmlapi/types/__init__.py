@@ -6,6 +6,7 @@ from .config import (
     Address,
     AddressGroup,
     AggregateEthernet,
+    Configuration,
     CustomUrlCategory,
     DeviceGroup,
     Ethernet,

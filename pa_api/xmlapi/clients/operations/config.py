@@ -1,3 +1,4 @@
+from pa_api.utils import first
 from pa_api.xmlapi.clients.operations.base import OperationProxy
 from pa_api.xmlapi.utils import (
     Element,
@@ -95,11 +96,15 @@ class Config(OperationProxy):
         Get the configuration to be commited as an XML object
         """
         cmd = "<show><config><candidate></candidate></config></show>"
-        return self._request(cmd, remove_blank_text=False)
+        return first(
+            self._request(cmd, remove_blank_text=False).xpath("/response/result/config")
+        )
 
     def running_config(self) -> Element:
         """
         Get the current running configuration as an XML object
         """
         cmd = "<show><config><running></running></config></show>"
-        return self._request(cmd, remove_blank_text=False)
+        return first(
+            self._request(cmd, remove_blank_text=False).xpath("/response/result/config")
+        )
