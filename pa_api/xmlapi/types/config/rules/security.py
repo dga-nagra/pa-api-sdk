@@ -1,4 +1,4 @@
-from typing import Iterable, Literal, Optional, TYPE_CHECKING, Union
+from typing import TYPE_CHECKING, Iterable, Literal, Optional, Union
 
 from pydantic import AliasPath, ConfigDict, Field
 
@@ -7,6 +7,7 @@ from pa_api.xmlapi.utils import etree_tostring
 
 if TYPE_CHECKING:
     from pa_api.xmlapi.clients import Client
+
 
 class ProfileSetting(XMLBaseModel):
     groups: List[String] = Field(
@@ -28,7 +29,7 @@ class Security(XMLBaseModel):
     @property
     def xpath(self):
         return self.get_xpath()
-    
+
     def get_xpath(self, rulebase=None):
         if rulebase is None:
             rulebase = "*[self::pre-rulebase or self::post-rulebase]"
@@ -37,7 +38,9 @@ class Security(XMLBaseModel):
     # def add_destination_member(self, client: "Client", member: str):
     #     return client.configuration.create(f"{self.xpath}/destination", f"<member>{member}</member>")
 
-    def remove_destination_member(self, client: "Client", members: Union[str, Iterable[str]], rulebase=None):
+    def remove_destination_member(
+        self, client: "Client", members: Union[str, Iterable[str]], rulebase=None
+    ):
         # We cannot direclty edit members, we need to replace the whole object with its new configuration
         # pre-rulebase is required
         if isinstance(members, str):
@@ -46,12 +49,13 @@ class Security(XMLBaseModel):
             members_to_remove = set(members)
         if not members:
             return
-        
+
         rule_xpath = self.get_xpath(rulebase)
         rule = client.configuration.get(rule_xpath).xpath("/response/result/entry")[0]
         destination = rule.xpath(".//destination")[0]
         nodes_to_remove = [
-            m for m in destination.getchildren()
+            m
+            for m in destination.getchildren()
             if m.tag == "member" and m.text in members_to_remove
         ]
         for n in nodes_to_remove:
